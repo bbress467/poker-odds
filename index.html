@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker Odds Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="felt">
+    <header class="header">
+      <h1>Poker Odds Calculator</h1>
+      <p class="tagline">Enter your scenario. Get the numbers.</p>
+    </header>
+
+    <main class="main">
+      <section class="card-input section">
+        <h2>Your hand</h2>
+        <p class="hint">e.g. <code>9H</code> 9 of hearts, <code>AD</code> ace of diamonds, <code>TC</code> 10 of clubs</p>
+        <div class="input-row">
+          <label>Card 1</label>
+          <input type="text" id="hole1" placeholder="e.g. AS" maxlength="3" autocomplete="off" />
+          <label>Card 2</label>
+          <input type="text" id="hole2" placeholder="e.g. KH" maxlength="3" autocomplete="off" />
+        </div>
+      </section>
+
+      <section class="board section">
+        <h2>Board</h2>
+        <div class="input-row">
+          <label>Flop</label>
+          <input type="text" id="flop1" placeholder="e.g. 9H" maxlength="3" />
+          <input type="text" id="flop2" placeholder="TD" maxlength="3" />
+          <input type="text" id="flop3" placeholder="2C" maxlength="3" />
+        </div>
+        <div class="input-row">
+          <label>Turn</label>
+          <input type="text" id="turn" placeholder="e.g. 3S" maxlength="3" />
+        </div>
+        <div class="input-row">
+          <label>River</label>
+          <input type="text" id="river" placeholder="e.g. 7H" maxlength="3" />
+        </div>
+      </section>
+
+      <section class="game-settings section">
+        <h2>Game settings</h2>
+        <div class="settings-grid">
+          <div class="setting">
+            <label for="players">Players at table</label>
+            <input type="number" id="players" min="2" max="10" value="6" />
+          </div>
+          <div class="setting">
+            <label for="buyin">Buy-in ($)</label>
+            <input type="number" id="buyin" min="0" step="1" value="100" />
+          </div>
+          <div class="setting">
+            <label for="pot">Current pot ($)</label>
+            <input type="number" id="pot" min="0" step="1" value="50" />
+          </div>
+          <div class="setting">
+            <label for="toCall">To call ($)</label>
+            <input type="number" id="toCall" min="0" step="1" value="10" />
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="calculate">Calculate odds</button>
+        <button type="button" class="btn btn-secondary" id="clear">Clear</button>
+      </div>
+
+      <section class="results section" id="results" hidden>
+        <h2>Odds &amp; outcomes</h2>
+        <div class="odds-grid" id="oddsGrid"></div>
+        <div class="recommendation" id="recommendation"></div>
+      </section>
+
+      <section class="errors section" id="errors" hidden>
+        <h2>Issues</h2>
+        <ul id="errorList"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Card format: rank (2–9, T, J, Q, K, A) + suit (H, D, C, S). Leave board blank for pre-flop.</p>
+    </footer>
+  </div>
+  <script src="poker.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

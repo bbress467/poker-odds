@@ -1,0 +1,338 @@
+/* Poker Odds Calculator – felt table aesthetic, clean inputs */
+
+:root {
+  --felt: #0d5c2e;
+  --felt-dark: #084422;
+  --felt-light: #117a3d;
+  --gold: #c9a227;
+  --gold-dim: #a68520;
+  --cream: #f5f0e6;
+  --cream-dim: #e8e2d6;
+  --white: #fff;
+  --text: #1a1a1a;
+  --text-soft: #4a4a4a;
+  --error: #c94a4a;
+  --success: #2d8a4a;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--text);
+  background: var(--felt);
+}
+
+.felt {
+  min-height: 100vh;
+  padding: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+}
+
+.tagline {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  color: var(--cream-dim);
+}
+
+.main {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+.hint code {
+  font-family: var(--font-mono);
+  background: var(--cream-dim);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.input-row label {
+  min-width: 4rem;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+
+.input-row input[type="text"] {
+  width: 4rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border: 2px solid var(--cream-dim);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  text-transform: uppercase;
+}
+
+.input-row input[type="text"]:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.input-row input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.setting label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-bottom: 0.25rem;
+}
+
+.setting input[type="number"] {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border: 2px solid var(--cream-dim);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
+
+.setting input[type="number"]:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.btn {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--text);
+}
+
+.btn-primary:hover {
+  background: var(--gold-dim);
+  box-shadow: 0 2px 12px rgba(201, 162, 39, 0.4);
+}
+
+.btn-secondary {
+  background: var(--cream-dim);
+  color: var(--text-soft);
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+/* Results */
+.results.section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cream-dim);
+}
+
+.odds-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.outcome {
+  padding: 0.75rem;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--cream-dim);
+}
+
+.outcome.made {
+  border-left-color: var(--success);
+}
+
+.outcome.draw {
+  border-left-color: var(--gold);
+}
+
+.outcome-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.outcome-bar {
+  height: 8px;
+  background: var(--cream-dim);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.35rem;
+}
+
+.outcome-fill {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.outcome.made .outcome-fill {
+  background: var(--success);
+}
+
+.outcome-pct {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+
+.outcome-desc {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-top: 0.25rem;
+}
+
+.recommendation {
+  margin-top: 1.25rem;
+}
+
+.recommendation .tips {
+  background: var(--white);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--gold);
+}
+
+.recommendation .tips h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.recommendation .tips ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.recommendation .tips li {
+  margin-bottom: 0.35rem;
+}
+
+/* Errors */
+.errors.section {
+  background: #fef2f2;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--error);
+}
+
+.errors h2 {
+  color: var(--error);
+}
+
+.errors ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.errors li {
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--cream-dim);
+}
+
+.footer p {
+  margin: 0;
+}
+
+@media (max-width: 520px) {
+  .felt {
+    padding: 1rem;
+  }
+
+  .main {
+    padding: 1.25rem;
+  }
+
+  .input-row input[type="text"] {
+    width: 3.5rem;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
