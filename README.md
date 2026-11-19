@@ -1,36 +1,43 @@
 # Poker Odds Calculator
 
-A single-page web app that takes a live poker scenario (your hand, board, pot, etc.) and shows **percentages to hit** outcomes (flush, straight, pair, etc.) and **recommendations** based on your hand and pot odds.
+A single-page web app that takes a live Texas Hold'em scenario (your hand, the board, pot and bet size) and shows the probability of improving to key hands, plus a simple recommendation based on pot odds.
 
-## How to run
+![Poker Odds screenshot](docs/screenshot.png)
 
-Open `index.html` in a browser (double-click or drag into Chrome/Firefox/Safari). No server required.
+## Features
 
-Or from the project folder:
+- Enter two hole cards and any of the flop, turn and river (leave the board blank for pre-flop).
+- Input validation with clear messages for malformed or duplicate cards.
+- Detects made hands (pair, two pair, set, straight, flush, full house, quads) and draws (flush, open-ended and gutshot straights).
+- Outs-based probability of hitting on the turn and river, computed exactly from the number of unseen cards.
+- Recommendation (bet, call, fold) using your equity against the pot odds for the amount to call.
+- Runs entirely in the browser. Nothing is sent to a server.
+
+## Card format
+
+Rank `2`-`9`, `T`, `J`, `Q`, `K`, `A` followed by suit `H`, `D`, `C`, `S`. Examples: `9H`, `AD`, `TC`.
+
+## Tech stack
+
+Vanilla HTML, CSS and JavaScript. No dependencies and no build step.
+
+- `poker.js`: card parsing, hand detection, outs, probabilities, recommendation
+- `app.js`: DOM wiring, validation and rendering
+- `index.html`, `styles.css`: UI
+
+## Running locally
+
+Open `index.html` in a browser, or serve the folder:
 
 ```bash
-npx serve .
-# or: python3 -m http.server 8000
+python3 -m http.server 8000
+# or: npx serve .
 ```
 
-Then go to `http://localhost:3000` (or 8000).
+Then visit http://localhost:8000.
 
-## Card input format
+## Limitations
 
-- **Rank**: `2`–`9`, `T` (10), `J`, `Q`, `K`, `A`
-- **Suit**: `H` hearts, `D` diamonds, `C` clubs, `S` spades
-
-Examples: `9H` (9 of hearts), `AD` (ace of diamonds), `TC` (10 of clubs).
-
-## What you can enter
-
-- **Your hand**: two hole cards (required).
-- **Board**: flop (3 cards), turn, river. Leave turn/river blank if you’re pre-flop or on the flop.
-- **Game**: number of players, buy-in, current pot, amount to call.
-
-## What you get
-
-- **Odds**: probability (as a %) to make flush, straight, pair, two pair, set, full house, etc., with a short description (e.g. “Flush draw, 9 outs”).
-- **Recommendation**: whether to bet, call, or fold based on hand strength and pot odds.
-
-All logic runs in the browser; nothing is sent to a server.
+- Probabilities are standard outs-based estimates, not a simulation, and they don't model opponent hands or ranges.
+- The "players" and "buy-in" fields are collected but not yet used in the calculation.
+- The recommendation is a simple heuristic, not solver-grade advice.
